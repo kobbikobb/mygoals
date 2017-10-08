@@ -1,9 +1,10 @@
 package com.kobbikobb.mygoals.rest;
 
-import com.google.common.collect.Lists;
 import com.kobbikobb.mygoals.services.GoalRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,11 +18,15 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GoalsResource {
 
+    private GoalRepository goalRepository;
+
+    @Autowired
+    public GoalsResource(GoalRepository goalRepository) {
+        this.goalRepository = goalRepository;
+    }
+
     @GET
     public List<GoalBean> getAllGoals() {
-
-        GoalRepository goalRepository = new GoalRepository();
-
         ModelMapper modelMapper = new ModelMapper();
         java.lang.reflect.Type targetListType = new TypeToken<List<GoalBean>>() {}.getType();
         return modelMapper.map(goalRepository.getAll(), targetListType);

@@ -1,8 +1,10 @@
 package com.kobbikobb.mygoals;
 
+import com.kobbikobb.mygoals.rest.GoalsResource;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,13 +22,16 @@ public class Main {
      * @return Grizzly HTTP server.
      */
     public static HttpServer startServer() {
-        // create a resource config that scans for JAX-RS resources and providers
-        // in com.kobbikobb.mygoals package
-        final ResourceConfig rc = new ResourceConfig().packages("com.kobbikobb.mygoals");
 
-        // create and start a new instance of grizzly http server
-        // exposing the Jersey application at BASE_URI
-        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
+        ResourceConfig resourceConfig = new ResourceConfig()
+                //register resources
+                .packages("com.kobbikobb.mygoals.rest");
+
+        //register services
+        resourceConfig.property("contextConfig",
+                new AnnotationConfigApplicationContext("com.kobbikobb.mygoals.services"));
+
+        return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
     }
 
     /**
@@ -35,7 +40,7 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
+        HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
