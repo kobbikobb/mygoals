@@ -33,6 +33,7 @@ public class GoalsResourceTest {
                 .get( "/goals")
                 .then()
                 .statusCode(200)
+                .log().all()
                 .body("[0].description", containsString("Learn how to relax with my children"));
     }
 }

@@ -1,6 +1,9 @@
 package com.kobbikobb.mygoals.rest;
 
 import com.google.common.collect.Lists;
+import com.kobbikobb.mygoals.services.GoalRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,12 +20,10 @@ public class GoalsResource {
     @GET
     public List<GoalBean> getAllGoals() {
 
-        GoalBean goal1 = new GoalBean();
-        goal1.setDescription("Learn how to relax with my children");
+        GoalRepository goalRepository = new GoalRepository();
 
-        GoalBean goal2 = new GoalBean();
-        goal2.setDescription("Contribute to open source at least 2 times per week");
-
-        return Lists.newArrayList(goal1, goal2);
+        ModelMapper modelMapper = new ModelMapper();
+        java.lang.reflect.Type targetListType = new TypeToken<List<GoalBean>>() {}.getType();
+        return modelMapper.map(goalRepository.getAll(), targetListType);
     }
 }
