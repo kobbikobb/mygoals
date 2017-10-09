@@ -9,6 +9,7 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,22 +21,12 @@ import java.util.List;
 public class GoalsResource {
 
     private ModelMapper modelMapper;
-
     private GoalRepository goalRepository;
 
     @Autowired
-    public GoalsResource(GoalRepository goalRepository) {
+    public GoalsResource(GoalRepository goalRepository, ModelMapper modelMapper) {
         this.goalRepository = goalRepository;
-
-        // TODO: Inject with spring
-        modelMapper = new ModelMapper();
-        Converter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
-            @Override
-            protected LocalDate convert(String source) {
-                return LocalDate.parse(source);
-            }
-        };
-        modelMapper.addConverter(toStringDate);
+        this.modelMapper = modelMapper;
     }
 
     @GET

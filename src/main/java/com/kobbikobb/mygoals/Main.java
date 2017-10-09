@@ -1,6 +1,5 @@
 package com.kobbikobb.mygoals;
 
-import com.kobbikobb.mygoals.rest.GoalsResource;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -29,7 +28,7 @@ public class Main {
 
         //register services
         resourceConfig.property("contextConfig",
-                new AnnotationConfigApplicationContext("com.kobbikobb.mygoals.services"));
+                new AnnotationConfigApplicationContext(ApplicationConfiguration.class));
 
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), resourceConfig);
     }
