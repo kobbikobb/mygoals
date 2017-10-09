@@ -13,5 +13,5 @@
 * Base URL from configuration
 * Category
 * Enhance goal, category, reminder, challenge
-
+* Build, test and deploy automation
 

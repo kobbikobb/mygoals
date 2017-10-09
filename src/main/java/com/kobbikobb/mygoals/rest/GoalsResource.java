@@ -1,15 +1,13 @@
 package com.kobbikobb.mygoals.rest;
 
+import com.kobbikobb.mygoals.model.Goal;
 import com.kobbikobb.mygoals.services.GoalRepository;
+import com.kobbikobb.mygoals.services.InMemoryGoalRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -27,8 +25,18 @@ public class GoalsResource {
 
     @GET
     public List<GoalBean> getAllGoals() {
+        //TODO: Inject
         ModelMapper modelMapper = new ModelMapper();
         java.lang.reflect.Type targetListType = new TypeToken<List<GoalBean>>() {}.getType();
         return modelMapper.map(goalRepository.getAll(), targetListType);
+    }
+
+    @POST
+    public GoalBean createGoal(CreateGoalBean createGoalBean) {
+
+        ModelMapper modelMapper = new ModelMapper();
+        Goal goal = modelMapper.map(createGoalBean, Goal.class);
+
+        return modelMapper.map(goalRepository.create(goal), GoalBean.class);
     }
 }
