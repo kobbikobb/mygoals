@@ -71,6 +71,7 @@ public class GoalsResourceTest {
                 .get( "/goals")
                 .then()
                 .statusCode(OK)
-                .body("[0].description", containsString("Clean all my clothes"));
+                .body("[0].description", Matchers.equalTo("Clean all my clothes"))
+                .body("[0].targetDate", Matchers.equalTo("2008-09-12"));
     }
 }
