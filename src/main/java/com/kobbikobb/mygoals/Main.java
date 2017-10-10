@@ -7,7 +7,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Properties;
 
 /**
  * Main class.
