@@ -1,7 +1,6 @@
 # Simple RestAPI for personal goal setting
 
-Build status:
-[![Build Status](https://travis-ci.org/kobbikobb/mygoals.svg?branch=master)]
+![Build Status](https://travis-ci.org/kobbikobb/mygoals.svg?branch=master)
 
 ### Technologies
 * Jersey
