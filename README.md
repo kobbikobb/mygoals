@@ -1,5 +1,8 @@
 # Simple RestAPI for personal goal setting
 
+Build status:
+https://travis-ci.org/kobbikobb/mygoals.svg?branch=master
+
 ### Technologies
 * Jersey
 * Spring
